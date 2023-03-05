@@ -1,0 +1,114 @@
+.content-wrapper {
+	position: relative;
+	display: inline-block;
+	max-width: 80%;
+	margin: 0 auto;
+}
+/* Стили для общего контейнера */
+.content{
+	display: flex;
+	flex-direction: column;
+	background-color: silver;
+	align-items: center;
+	width: 280px;
+	height: 320px;
+}
+table {
+	width: 280px;
+	height: 280px;
+	font-size: 12px;
+	text-align: center;
+	border: 5px groove grey;
+}
+/* Стили для закрытых ячеек */
+table tbody tr td {
+	background-image: url("../image/сапер.png");
+	background-position: -0px -50px;
+	width: 14px;
+	height: 14px;
+}
+table tbody tr td:active {
+	width: 14px;
+	height: 14px;
+}
+
+/* Стили для открытых ячеек с миной */
+.mineCell {
+	background-image: url("../image/сапер.png");
+	background-position: -102px -50px;
+	width: 14px;
+	height: 14px;
+	
+}
+
+/* Стили для пустых ячеек */
+.emptyCell {
+	background-image: url("../image/сапер.png");
+	background-position: -17px -50px;
+	width: 14px;
+	height: 14px;
+}
+
+/* Стили для ячеек, помеченных флагом  */
+.flagCell {
+	background-image: url("../image/сапер.png");
+	background-position: -35px -50px;
+	width: 14px;
+	height: 14px;
+}
+
+/* Стили для счетчиков */
+.count {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	height: 40;
+	border: 5px groove grey;
+}
+.count__flags {
+	background-image: url("../image/сапер.png");
+	background-position: -35px -50px;
+	display: block;
+	width: 14px;
+	height: 14px;
+	margin: 10px;
+}
+.countFlags {
+	height: 14px;
+	margin-left: 15px;
+}
+.count__mines {
+	background-image: url("../image/сапер.png");
+	background-position: -103px -52px;
+	display: block;
+	margin: 10px ;
+	width: 14px;
+	height: 14px;
+}
+.countMines {
+	height: 14px;
+	margin-left: 15px;
+}
+.victoryOrLoss {
+	background-image: url("../image/сапер.png");
+	background-position: -2px -25px;
+	width: 25px;
+	height: 25px;
+	margin: 10px auto 5px;
+	display: block;
+}
+.victoryOrLoss:active {
+	background-image: url("../image/сапер.png");
+	background-position: -28px -25px;
+}
+/* Стили для кнопки "Начать игру заново" */
+.content button {
+	background-image: url("../image/сапер.png");
+	background-position: -3px -27px;
+	width: 25px;
+	height: 25px;
+}
+.content button:active {
+	background-image: url("../image/сапер.png");
+	background-position: -26px -25px;
+}
