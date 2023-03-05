@@ -1,7 +1,9 @@
+body {
+	width: 320px;
+}
 .content-wrapper {
 	position: relative;
 	display: inline-block;
-	max-width: 80%;
 	margin: 0 auto;
 }
 /* Стили для общего контейнера */
