@@ -7,6 +7,8 @@ window.addEventListener('DOMContentLoaded', () => {
 	const mine = 16;
 	let flags = 0;
 	let victory = false;
+	const FIELD_SIZE = 14;
+    const TOTAL_MINES = 16;
 
 	// Функция создания и запуску игры
 	function createGame() {
@@ -23,7 +25,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		let count = 1;
 
-		for (let i = 0; i < 14; i++) {
+		for (let i = 0; i < FIELD_SIZE; i++) {
 			const tr = document.createElement('tr');
 			tbody.append(tr);
 
@@ -46,16 +48,14 @@ window.addEventListener('DOMContentLoaded', () => {
 		const randomCells = [];
 
 		let count = 0;
-		while (count < 16) {
+		while (count < TOTAL_MINES) {
 			let randomCell = cell[Math.round(Math.random() * cell.length)];
 
-			if (randomCells.includes(randomCell)) {
-				continue;
-			} else {
+			if (!randomCells.includes(randomCell)) {
 				randomCell.setAttribute("data-mine", true);
 				randomCells.push(randomCell);
 				count++;
-			}
+			  }
 		}
 	}
 
@@ -94,17 +94,17 @@ window.addEventListener('DOMContentLoaded', () => {
 		function openCell(event) {
 			addButtonNewGame();
 
-			if (event.target.getAttribute("data-mine") === 'false') {
-				showEmptyCell(event.target)
-				removeFlag(event);
-				countMineNeighbors(event.target);
-
-			} else if (event.target.getAttribute("data-mine") === 'true') {
-				removeFlag(event);
-				showMine(event);
-				endGame();
+			const hasMine = event.target.getAttribute("data-mine") === 'true';
+  				if (event.target.getAttribute("data-mine") === 'false') {
+    				showEmptyCell(event.target)
+    				removeFlag(event);
+    				countMineNeighbors(event.target);
+  				} else {
+    				removeFlag(event);
+    				showMine(event);
+    				endGame();
+  				}
 			}
-		}
 
 		// Функция события "клик" ПКМ - cтавим флаг ПКМ
 		function addRemoveFlag(event) {
@@ -118,13 +118,13 @@ window.addEventListener('DOMContentLoaded', () => {
 				return;
 			}
 			// Если на ячейке уже есть флаг - удалить
-			if (classCell.includes('flagCell')) {
-				removeFlag(event);
-				// Если на ячейке нет флага - поставить
-			} else if (!classCell.includes('flagCell') && flags < 10) {
-				addFlag(event);
+			const hasFlag = classCell.includes('flagCell');
+ 				if (hasFlag) {
+        		    removeFlag(event);
+  				} else if (flags < 10) {
+					addFlag(event);
+   				}
 			}
-		}
 
 		// Функция удаления флага
 		function removeFlag(event) {
@@ -152,14 +152,14 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 
 		// Функция показа всех мин
-		function showAllMines() {
-			const allMines = document.querySelectorAll('td'); // Получаем все ячейки
-			// Ищим все оставшиеся мины
-			allMines.forEach(cell => { // Перебираем все ящейки
-				if (cell.getAttribute("data-mine") === 'true') { // Проверяем ячейку на наличие мыны
-					cell.classList.remove('flagCell'); // Удаляем флаг
-					cell.classList.add('mineCell'); // Добавляем мину
-				}
+		let gameField = null;
+		function createArea() {
+			gameField = document.createElement('table') 
+			const allMines = document
+			.querySelectorAll('td[data-mine="true"]')
+			.forEach(cell => {
+			  cell.classList.remove('flagCell');
+			  cell.classList.add('mineCell');
 			})
 		}
 
@@ -273,18 +273,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		// Функция подсчета и вывода количества мин вокруг соседней ячейки
 		function emptyNeighbors(element) {
-			let countMineNeighbors = 0; // Счетчик мин
-			const neighbors1 = getNeighbors(element); // Массив соседних ячеек
-
-			// Перебор соседних ячеек и проверка на наличие мины
-			neighbors1.forEach(elem => {
-				if (elem.getAttribute('data-mine') === 'true') {
-					countMineNeighbors++;
-				};
-			});
-			// Вывод в соседней ячейке количества мин 
-			element.innerText = countMineNeighbors;
-		}		
+			element.innerText = 
+			  getNeighbors(element)
+			  .filter(element => element.getAttribute('data-mine') === 'true')
+			  .length
+		  }	
 	}
 	createGame();
 })
